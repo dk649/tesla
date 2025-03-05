@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="top-bar" class="bg-gray-100 fixed top-0 right-0 left-0 py-2">
+      <p class="text-center py-2 font-semibold">
+        0% APR available for qualified buyers
+      </p>
+    </div>
+
+    <header class="flex justify-between items-center px-10 py-6 mt-16">
+      <img src="./images/logo.svg" alt="tesla" width="120" height="24" />
+      <button><i class="fa-solid fa-globe"></i> <span>US</span></button>
+    </header>
+
+    <main class="flex flex-col md:flex-row justify-between px-4 md:px-10 py-6">
+      <section class="w-full md:w-3/4">
+        <div class="sticky top-24">
+          <div
+            class="h-96 bg-gray-300 flex items-center justify-center overflow-hidden mb-4"
+          >
+            <img
+              class="max-w-full h-auto transform scale-125"
+              id="exterior-image"
+              src="/images/model-y-stealth-grey.jpg"
+              alt="car"
+            />
+          </div>
+
+          <div
+            class="h-96 bg-gray-300 flex items-center justify-center overflow-hidden mb-4"
+          >
+            <img
+              class="max-w-full h-auto transform scale-125"
+              id="interior-image"
+              src="/images/model-y-interior-dark.jpg"
+              alt="car"
+            />
+          </div>
+        </div>
+      </section>
+
+      <aside class="w-full md:w-1/3 pl-0 md:pl-8 mt-6 md:mt-0 z-2">
+        side bar
+      </aside>
+    </main>
+  </body>
+</html>
