@@ -6,6 +6,13 @@ window.onload = function () {
   const interiorImage = document.getElementById("interior-image");
   const wheelButtonsSection = document.getElementById("wheel-buttons");
 
+  let selectedColor = "Stelth Gray";
+  const selectedOptions = {
+    "Performance Wheels": false,
+    "Performance Package": false,
+    "Full Self-Driving": false,
+  };
+
   const handleScroll = () => {
     const atTop = window.scrollY === 0;
     topBar.classList.toggle("visible-bar", atTop);
@@ -39,9 +46,9 @@ window.onload = function () {
       buttons.forEach((btn) => btn.classList.remove("btn-selected"));
       button.classList.add("btn-selected");
       if (event.currentTarget === exteriorColorSection) {
-        const color = button.querySelector("img").alt;
-        console.log(color);
-        exteriorImage.src = exteriorImages[color];
+        selectedColor = button.querySelector("img").alt;
+
+        updateExteriorImage();
       } else if (event.currentTarget === interiorColorSection) {
         const color = button.querySelector("img").alt;
         interiorImage.src = interiorImages[color];
@@ -49,16 +56,33 @@ window.onload = function () {
     }
   };
 
+  const updateExteriorImage = () => {
+    const performanceSuffix = selectedOptions["Performance Wheels"]
+      ? "-performance"
+      : "";
+
+    const colorKey =
+      selectedColor in exteriorImages ? selectedColor : "Stealth Gray";
+    exteriorImage.src = exteriorImages[colorKey].replace(
+      ".jpg",
+      `${performanceSuffix}.jpg`
+    );
+
+    console.log(colorKey);
+  };
+
   const handleWheelButtonClick = (event) => {
     if (event.target.tagName === "BUTTON") {
       const buttons = document.querySelectorAll("#wheel-buttons button");
 
       buttons.forEach((button) => {
-        const selectedWheel = event.target.textContent.includes("Performance");
+        selectedOptions["Performance Wheels"] =
+          event.target.textContent.includes("Performance");
 
-        exteriorImage.src = selectedWheel
-          ? "/images/model-y-stealth-grey-performance.jpg"
-          : "/images/model-y-stealth-grey.jpg";
+        updateExteriorImage();
+        // exteriorImage.src = selectedWheel
+        //   ? "/images/model-y-stealth-grey-performance.jpg"
+        //   : "/images/model-y-stealth-grey.jpg";
       });
     }
   };
