@@ -4,6 +4,7 @@ window.onload = function () {
   const interiorColorSection = document.getElementById("interior-buttons");
   const exteriorImage = document.getElementById("exterior-image");
   const interiorImage = document.getElementById("interior-image");
+  const wheelButtonsSection = document.getElementById("wheel-buttons");
 
   const handleScroll = () => {
     const atTop = window.scrollY === 0;
@@ -41,10 +42,28 @@ window.onload = function () {
         const color = button.querySelector("img").alt;
         console.log(color);
         exteriorImage.src = exteriorImages[color];
+      } else if (event.currentTarget === interiorColorSection) {
+        const color = button.querySelector("img").alt;
+        interiorImage.src = interiorImages[color];
       }
     }
   };
 
+  const handleWheelButtonClick = (event) => {
+    if (event.target.tagName === "BUTTON") {
+      const buttons = document.querySelectorAll("#wheel-buttons button");
+
+      buttons.forEach((button) => {
+        const selectedWheel = event.target.textContent.includes("Performance");
+
+        exteriorImage.src = selectedWheel
+          ? "/images/model-y-stealth-grey-performance.jpg"
+          : "/images/model-y-stealth-grey.jpg";
+      });
+    }
+  };
+
+  wheelButtonsSection.addEventListener("click", handleWheelButtonClick);
   interiorColorSection.addEventListener("click", handleColorButtonClick);
   exteriorColorSection.addEventListener("click", handleColorButtonClick);
 
