@@ -5,12 +5,47 @@ window.onload = function () {
   const exteriorImage = document.getElementById("exterior-image");
   const interiorImage = document.getElementById("interior-image");
   const wheelButtonsSection = document.getElementById("wheel-buttons");
+  const performanceBtn = document.getElementById("performance-upgrade-btn");
+  const totalPrice = document.getElementById("total-price");
+  const fullSelfDriving = document.getElementById("full-self-driving-checkbox");
+
+  const basePrice = 52490;
+
+  let currentPrice = basePrice;
 
   let selectedColor = "Stelth Gray";
   const selectedOptions = {
     "Performance Wheels": false,
     "Performance Package": false,
     "Full Self-Driving": false,
+  };
+
+  const pricing = {
+    "Performance Wheels": 2500,
+    "Performance Package": 5000,
+    "Full Self-Driving": 8500,
+    Accessories: {
+      "Center Console Trays": 35,
+      Sunshade: 105,
+      "All- Weather Interior Liners": 225,
+    },
+  };
+
+  const updateTotalPrice = () => {
+    currentPrice = basePrice;
+    if (selectedOptions["Performance Wheels"]) {
+      currentPrice += pricing["Performance Wheels"];
+    }
+
+    if (selectedOptions["Performance Package"]) {
+      currentPrice += pricing["Performance Package"];
+    }
+
+    if (selectedOptions["Full Self-Driving"]) {
+      currentPrice += pricing["Full Self-Driving"];
+    }
+
+    totalPrice.textContent = `$${currentPrice.toLocaleString()}`;
   };
 
   const handleScroll = () => {
@@ -62,7 +97,7 @@ window.onload = function () {
       : "";
 
     const colorKey =
-      selectedColor in exteriorImages ? selectedColor : "Stealth Gray";
+      selectedColor in exteriorImages ? selectedColor : "Stealth Grey";
     exteriorImage.src = exteriorImages[colorKey].replace(
       ".jpg",
       `${performanceSuffix}.jpg`
@@ -83,13 +118,36 @@ window.onload = function () {
         // exteriorImage.src = selectedWheel
         //   ? "/images/model-y-stealth-grey-performance.jpg"
         //   : "/images/model-y-stealth-grey.jpg";
+
+        updateTotalPrice();
       });
     }
+  };
+
+  const handlePerformanceUpdrage = () => {
+    performanceBtn.classList.toggle("bg-gray-700");
+    let isSelected = performanceBtn.classList.toggle("text-white");
+    console.log("working");
+
+    selectedOptions["Performance Package"] = isSelected;
+
+    updateTotalPrice();
+  };
+
+  const handleFullSelfDriving = () => {
+    if (fullSelfDriving.checked) {
+      selectedOptions["Full Self-Driving"] = true;
+    } else if (!fullSelfDriving.checked) {
+      selectedOptions["Full Self-Driving"] = false;
+    }
+    updateTotalPrice();
   };
 
   wheelButtonsSection.addEventListener("click", handleWheelButtonClick);
   interiorColorSection.addEventListener("click", handleColorButtonClick);
   exteriorColorSection.addEventListener("click", handleColorButtonClick);
+  performanceBtn.addEventListener("click", handlePerformanceUpdrage);
+  fullSelfDriving.addEventListener("change", handleFullSelfDriving);
 
   window.addEventListener("scroll", () => requestAnimationFrame(handleScroll));
 };
