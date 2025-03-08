@@ -8,6 +8,9 @@ window.onload = function () {
   const performanceBtn = document.getElementById("performance-upgrade-btn");
   const totalPrice = document.getElementById("total-price");
   const fullSelfDriving = document.getElementById("full-self-driving-checkbox");
+  const accessoryCheckboxes = document.querySelectorAll(
+    ".accessory-form-checkbox"
+  );
 
   const basePrice = 52490;
 
@@ -27,7 +30,7 @@ window.onload = function () {
     Accessories: {
       "Center Console Trays": 35,
       Sunshade: 105,
-      "All- Weather Interior Liners": 225,
+      "All-Weather Interior Liners": 225,
     },
   };
 
@@ -44,6 +47,19 @@ window.onload = function () {
     if (selectedOptions["Full Self-Driving"]) {
       currentPrice += pricing["Full Self-Driving"];
     }
+
+    accessoryCheckboxes.forEach((checkbox) => {
+      const accessoryLabel = checkbox
+        .closest("label")
+        .querySelector("span")
+        .textContent.trim();
+
+      const accessoryPrice = pricing["Accessories"][accessoryLabel];
+
+      if (checkbox.checked) {
+        currentPrice += accessoryPrice;
+      }
+    });
 
     totalPrice.textContent = `$${currentPrice.toLocaleString()}`;
   };
@@ -142,6 +158,10 @@ window.onload = function () {
     }
     updateTotalPrice();
   };
+
+  accessoryCheckboxes.forEach((checkbox) => {
+    checkbox.addEventListener("change", () => updateTotalPrice());
+  });
 
   wheelButtonsSection.addEventListener("click", handleWheelButtonClick);
   interiorColorSection.addEventListener("click", handleColorButtonClick);
