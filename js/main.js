@@ -11,6 +11,8 @@ window.onload = function () {
   const accessoryCheckboxes = document.querySelectorAll(
     ".accessory-form-checkbox"
   );
+  const downPaymentElement = document.getElementById("down-payment");
+  const monthlyPaymentEl = document.getElementById("monthly-payment");
 
   const basePrice = 52490;
 
@@ -62,6 +64,26 @@ window.onload = function () {
     });
 
     totalPrice.textContent = `$${currentPrice.toLocaleString()}`;
+    updatePaymentBreakdown();
+  };
+
+  const updatePaymentBreakdown = () => {
+    const downPayment = currentPrice * 0.1;
+    downPaymentElement.textContent = `$${downPayment.toLocaleString()}`;
+
+    const loanMonths = 60;
+    const interestRate = 0.03;
+
+    const loanAmount = currentPrice - downPayment;
+
+    const monthlyInterestRate = interestRate / 12;
+    const monthlyPayment =
+      (loanAmount *
+        (monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanMonths))) /
+      (Math.pow(1 + monthlyInterestRate, loanMonths) - 1);
+    monthlyPaymentEl.textContent = `$${monthlyPayment.toLocaleString("en-US", {
+      maximumFractionDigits: 2,
+    })}`;
   };
 
   const handleScroll = () => {
@@ -163,6 +185,7 @@ window.onload = function () {
     checkbox.addEventListener("change", () => updateTotalPrice());
   });
 
+  updateTotalPrice();
   wheelButtonsSection.addEventListener("click", handleWheelButtonClick);
   interiorColorSection.addEventListener("click", handleColorButtonClick);
   exteriorColorSection.addEventListener("click", handleColorButtonClick);
